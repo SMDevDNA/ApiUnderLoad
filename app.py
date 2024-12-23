@@ -23,6 +23,8 @@ def get_db_connection():
 def create_table():
     conn = get_db_connection()
     cursor = conn.cursor()
+
+    # Створення таблиці
     create_table_query = '''
     CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -31,6 +33,13 @@ def create_table():
     );
     '''
     cursor.execute(create_table_query)
+
+    # Додавання індексів
+    create_index_name_query = 'CREATE INDEX IF NOT EXISTS idx_users_name ON users (name);'
+    create_index_age_query = 'CREATE INDEX IF NOT EXISTS idx_users_age ON users (age);'
+    cursor.execute(create_index_name_query)
+    cursor.execute(create_index_age_query)
+
     conn.commit()
     cursor.close()
     conn.close()
@@ -137,3 +146,9 @@ if __name__ == "__main__":
     create_table()
     results = perform_tests()
     print_results(results)
+
+    Кількість записів	INSERT (середній час, с)	SELECT (середній час, с)	UPDATE (середній час, с)	DELETE (середній час, с)
+    1,000	            2.0483	                    2.1694	                    4.5000	                    4.4610
+    10,000	            20.413	                    21.681	                    45.008	                    44.556
+    100,000	            204.430	                    216.810	                    449.980	                    446.050
+    1,000,000	        2015.0436	                2030.1646	                4040.5016	                4000.4528
