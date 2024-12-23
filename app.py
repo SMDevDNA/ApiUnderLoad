@@ -4,7 +4,11 @@ import random
 from psycopg2 import sql
 
 # Параметры подключения к БД
-
+host = "pg-32b22183-py-api-test-db.c.aivencloud.com"
+port = 12811
+dbname = "defaultdb"
+user = "avnadmin"
+password = "AVNS_h1CF9J3jlqE_axHiUEf"
 
 def get_db_connection():
     conn = psycopg2.connect(
